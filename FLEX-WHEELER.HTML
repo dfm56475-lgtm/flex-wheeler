@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="موقع فيلكس ويلر الرياضي للتأهيل الصحي و الرياضي ">
+  <meta name="keywords" content="نادي ,نادي اليمن ,فيلكس ويلر , نادي فيلكس ويلر اليمن إب ,إب ">
+  <meta name="author" content="عبدالرحمن شريف">
+  <title>FLEX-WHEELER</title>
+  <style>
+    /* تحسين التمرير السلس */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تغيير الخط لخط أنسب للمواقع الرياضية */
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
+      overflow-x: hidden; /* لمنع ظهور شريط التمرير الأفقي بسبب الحركات */
+    }
+
+    /* تأثير خلفية متحركة للجسم (إضافي لجعلها أكثر حيوية) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill="%23fff" fill-opacity="0.03"><circle cx="50" cy="50" r="1"/></g></svg>');
+      animation: animatedBackground 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes animatedBackground {
+      from { background-position: 0 0; }
+      to { background-position: 100px 100px; }
+    }
+
+    header {
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8); /* خلفية شبه شفافة عند التمرير */
+      position: sticky; /* جعل الهيدر يلتصق بالأعلى */
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(5px); /* تأثير ضبابي */
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    header h1 {
+      color: #ff4dff;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: neonText 1.5s ease-in-out infinite alternate; /* تأثير نيون للنص */
+    }
+
+    @keyframes neonText {
+      from { text-shadow: 0 0 5px #ff4dff, 0 0 10px #ff4dff, 0 0 20px #ff4dff; }
+      to { text-shadow: 0 0 2px #ff4dff, 0 0 5px #ff4dff, 0 0 10px #ff4dff; }
+    }
+
+    header nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    header nav span {
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    header nav span::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ff4dff;
+      transition: width 0.3s;
+    }
+
+    header nav span:hover {
+      color: #ff4dff;
+    }
+
+    header nav span:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      height: 90vh; /* زيادة الارتفاع قليلاً */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle, #1e3a8a, #0f172a);
+      position: relative;
+    }
+
+    /* تأثير ظهور تدريجي للقسم الرئيسي */
+    .hero div {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero h2 {
+      font-size: 3rem; /* تكبير الخط */
+      margin-bottom: 15px;
+      color: #66ccff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #ff00cc, #3399ff);
+      border: none;
+      padding: 15px 30px; /* زيادة التباعد */
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s; /* إضافة انتقالات */
+      display: inline-block; /* لضمان التباعد الصحيح للرابط */
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px); /* حركة للأعلى عند التحويم */
+      box-shadow: 0 5px 15px rgba(255, 0, 204, 0.4); /* تأثير ظل نيون */
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .btn a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .section {
+      padding: 80px 5%; /* زيادة التباعد */
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* خط تحتي مزخرف للعناوين */
+    .section h2::after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 3px;
+      bottom: -10px;
+      left: 20%;
+      background: linear-gradient(to right, transparent, #66ccff, transparent);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* زيادة الحجم الأدنى قليلًا */
+      gap: 30px; /* زيادة الفراغ بين البطاقات */
+      margin-top: 50px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03); /* تقليل الشفافية قليلاً */
+      border-radius: 20px; /* زوايا أكثر استدارة */
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* تأثيرات التفاعل للبطاقات */
+    .card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border-color: rgba(102, 204, 255, 0.3); /* تغيير لون الحدود عند التحويم */
+    }
+
+    .media-placeholder {
+      width: 100%; /* ضمان ملء العرض */
+      height: 180px; /* زيادة الارتفاع قليلاً */
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      margin-bottom: 20px;
+      overflow: hidden; /* لمنع الصورة من الخروج عن الحدود */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+      position: relative; /* إضافة لضبط تموضع الرابط */
+    }
+
+    .card:hover .media-placeholder {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* حركات مخصصة */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --------------------------------------------------- */
+    /* تعديلات لملء الصور للمربعات */
+    /* --------------------------------------------------- */
+
+    /* ضمان ملء الرابط للمساحة */
+    .media-placeholder a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* لضمان عدم خروج الصورة الكبيرة عن الحدود */
+    }
+
+    /* تعديل الصور لملء الحاوية مع الحفاظ على التناسب */
+    .media-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* لملء الحاوية تماماً مع قص الأطراف الزائدة للحفاظ على التناسب */
+      transition: transform 0.5s; /* حركة الصورة */
+      display: block; /* لضمان ملء المساحة بالكامل */
+    }
+
+    /* حركة الصورة عند تحويم البطاقة */
+    .card:hover .media-placeholder img {
+      transform: scale(1.1); /* تكبير الصورة قليلاً */
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #66ccff;
+      transition: color 0.3s;
+    }
+
+    .card:hover h3 {
+      color: white;
+    }
+
+    .card p {
+      font-size: 1rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(0,0,0,0.1);
+    }
+
+    footer p {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>FLEX-WHEELER</h1>
+  <nav>
+    <span onclick="window.scrollTo(0, 0)">الرئيسية</span>
+    <span onclick="document.querySelector('#services').scrollIntoView()">الخدمات</span>
+    <span onclick="document.querySelector('#subscribe').scrollIntoView()">الاشتراك</span>
+  </nav>
+</header>
+
+<section class="hero" id="subscribe">
+  <div>
+    <h2>ابدأ رحلتك الآن</h2>
+    <p>حقق أفضل نسخة من نفسك</p>
+    <a href="HTML_FOLDER/تسجيل إشتراك في النادي.HTML" class="btn">اشترك الآن</a>
+  </div>
+</section>
+
+<section class="section" id="video">
+  <h2>فيديو / عرض</h2>
+  <div class="media-placeholder" style="height:350px;">
+    <div style="font-size: 3rem; color: rgba(255,255,255,0.3);">&#9658;</div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <h2>الخدمات</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="media-placeholder"> 
+        <a href="HTML_FOLDER/مدرب شخصي .HTML"> 
+          <img src="IMG/1774785127529.png" alt="تدريب شخصي"> 
+        </a> 
+      </div>
+      <h3>تدريب شخصي</h3>
+      <p>احصل على خطة تدريب مخصصة ومتابعة مباشرة من مدربينا المحترفين لتحقيق أهدافك بكفاءة.</p>
+    </div>
+    <div class="card">
+      <div class="media-placeholder">
+        <a href="HTML_FOLDER/التمرين الجماعية .HTML">
+          <img src="IMG/1774787558492.png" alt="تمارين جماعية">
+        </a>
+      </div>
+      <h3>تمارين جماعية</h3>
+      <p>انضم إلى حصصنا الجماعية الحماسية واستمتع بالتدريب مع مجموعة تشاركك نفس الشغف والاهداف.</p>
+    </div>
+    <div class="card">
+      <div class="media-placeholder"> 
+        <a href="HTML_FOLDER/المعدات الرياضيه .HTML"> 
+          <img src="IMG/1774777074818.png" alt="معدات حديثة"> 
+        </a> 
+      </div>
+      <h3>معدات حديثة</h3>
+      <p>تدرب باستخدام أحدث وأفضل المعدات الرياضية العالمية لضمان تجربة تدريب آمنة وفعالة.</p>
+    </div>
+     <div class="card">
+      <div class="media-placeholder"> 
+        <a href="HTML_FOLDER/المكملات الغذائية .html"> 
+          <img src="IMG/1774776727657.png" alt="المكملات الغذائية"> 
+        </a> 
+      </div>
+      <h3>المكملات الغذائية</h3>
+      <p>اكتشف تشكيلتنا الواسعة من المكملات الغذائية عالية الجودة لدعم تغذيتك وتعزيز نتائجك.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Gym. جميع الحقوق محفوظة.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLEX-WHEELER - تسجيل الاشتراك</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header { padding: 20px; text-align: center; }
+    header h1 { color: #ff4dff; text-shadow: 0 0 15px rgba(255, 77, 255, 0.6); font-size: 2rem; }
+
+    .register-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .registration-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 35px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .registration-card h2 { 
+      color: #3399ff; 
+      text-align: center; 
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 8px; color: #cbd5e1; font-size: 0.9rem; }
+
+    .form-control {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #3399ff;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    select.form-control { cursor: pointer; }
+    option { background: #1e3a8a; }
+
+    .btn-whatsapp {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(45deg, #ff00cc, #3399ff);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-whatsapp:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(255, 0, 204, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>FLEX-WHEELER</h1>
+</header>
+
+<section class="register-container">
+  <div class="registration-card">
+
+     <h3 style="text-align: center; margin-bottom: 10px; color: #66ccff;">ابدأ التغيير اليوم</h3>
+    <p style="text-align: center; margin-bottom: 30px; color: #cbd5e1;">انضم لنخبة الرياضيين في إب</p>
+    <form id="gymRegisterForm">
+      <div class="form-group">
+        <label>الاسم الكامل:</label>
+        <input type="text" id="u-name" class="form-control" placeholder="أدخل اسمك الثلاثي" required>
+      </div>
+
+      <div class="form-group">
+        <label>كلمة المرور (الرمز):</label>
+        <input type="password" id="u-pass" class="form-control" placeholder="اختر رمزاً لحسابك" required>
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهاتف:</label>
+        <input type="tel" id="u-phone" class="form-control" placeholder="77x-xxx-xxx" required>
+      </div>
+
+      <div class="form-group">
+        <label>العمر:</label>
+        <input type="number" id="u-age" class="form-control" placeholder="أدخل عمرك" required>
+      </div>
+
+      <div class="form-group">
+        <label>باقة الاشتراك:</label>
+        <select id="u-plan" class="form-control">
+          <option value="شهري عادي">شهري عادي</option>
+          <option value="ذهبي (مدرب خاص)">ذهبي (مدرب خاص)</option>
+          <option value="سنوي (توفير)">سنوي (توفير)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-whatsapp">إرسال البيانات للواتساب 🚀</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  const myForm = document.getElementById('gymRegisterForm');
+
+  myForm.onsubmit = function(event) {
+    event.preventDefault();
+
+    // جلب القيم من المدخلات
+    const name = document.getElementById('u-name').value;
+    const pass = document.getElementById('u-pass').value;
+    const phone = document.getElementById('u-phone').value;
+    const age = document.getElementById('u-age').value;
+    const plan = document.getElementById('u-plan').value;
+
+    // الرقم الخاص بك بالصيغة الدولية
+    const targetNumber = "967770230567"; 
+
+    // تنسيق رسالة الواتساب
+    const waMessage = `🏋️‍♂️ *طلب اشتراك جديد - FLEX WHEELER* 🏋️‍♂️%0A%0A` +
+                      `👤 *المشترك:* ${name}%0A` +
+                      `🔐 *الرمز:* ${pass}%0A` +
+                      `📱 *الهاتف:* ${phone}%0A` +
+                      `🎂 *العمر:* ${age}%0A` +
+                      `💎 *نوع الباقة:* ${plan}%0A%0A` +
+                      `🔥 _الرجاء تفعيل الاشتراك في النظام بعد الاستلام_`;
+
+    // رابط الواتساب المباشر
+    const finalUrl = `https://wa.me/${targetNumber}?text=${waMessage}`;
+    
+    // فتح الرابط
+    window.open(finalUrl, '_blank');
+  };
+</script>
+
+</body>
+</html>

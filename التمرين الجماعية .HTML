@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEX-WHEELER | التمارين الجماعية الحماسية</title>
+    <style>
+        /* --- المتغيرات والتصفير الأساسي --- */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-panel: #141417;
+            --neon-blue: #00f2fe;
+            --neon-red: #ff0055;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --card-width: 290px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- الخلفية الهندسية المشتركة --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        /* --- الحاوية الرئيسية (نفس استايل البانر) --- */
+        .main-container {
+            width: 100%;
+            max-width: 1300px;
+            background-color: var(--bg-panel);
+            border: 2px solid #333;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- تأثيرات الإضاءة النيون الجانبية --- */
+        .neon-border-left, .neon-border-right {
+            position: absolute;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .neon-border-left {
+            left: 0;
+            background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .neon-border-right {
+            right: 0;
+            background: linear-gradient(to bottom, transparent, var(--neon-red), transparent);
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        /* --- الهيدر (عنوان القسم) --- */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 30px 10px 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* عنوان "التمارين الجماعية" المستوحى من اللوحة المعدنية */
+        .page-title {
+            background: linear-gradient(145deg, #2a2a2e, #1a1a1d);
+            border: 2px solid #444;
+            color: #fff;
+            padding: 10px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        /* --- قسم الحصص الجماعية (Classes Grid) --- */
+        .classes-section {
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        /* --- استايل بطاقة الحصة الجماعية --- */
+        .class-card {
+            background-color: rgba(0,0,0,0.3);
+            border: 2px solid #333;
+            border-radius: 8px;
+            width: 100%;
+            max-width: var(--card-width);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        /* إطار صورة الحصة (التركيز على صورة الشباب) */
+        .class-image-container {
+            height: 240px; /* زيادة الارتفاع لإظهار تفاصيل الصورة */
+            background-color: #000;
+            border-bottom: 2px solid #333;
+            overflow: hidden; /* لقص الصورة الزائدة */
+            position: relative;
+        }
+
+        .class-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* لملء الحاوية وإظهار الوجوه والعمل جماعي */
+            object-position: center; /* تمركز الصورة */
+            transition: transform 0.3s ease;
+        }
+
+        .class-card:hover .class-image-container img {
+            transform: scale(1.05); /* تأثير زووم خفيف */
+        }
+
+        /* تأثير إضاءة خلفي للصورة */
+        .class-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+            pointer-events: none;
+        }
+
+        /* تفاصيل الحصة */
+        .class-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .class-category {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .class-name {
+            font-size: 18px;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .class-features {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* زر الانضمام النيوني */
+        .join-btn {
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .class-card:nth-child(even) .join-btn {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+        }
+
+        .join-btn:hover {
+            background-color: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+        }
+
+        .class-card:nth-child(even) .join-btn:hover {
+            background-color: var(--neon-red);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        }
+
+        /* العناصر الزخرفية المعدنية في الزوايا */
+        .corner-deco {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .corner-deco.top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 3px solid #fff;
+            border-left: 3px solid #fff;
+        }
+
+        .corner-deco.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 3px solid #fff;
+            border-right: 3px solid #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+        <div class="neon-border-left"></div>
+        <div class="neon-border-right"></div>
+
+        <header class="header-section">
+            <div class="corner-deco top-left"></div>
+            <div class="page-title">التمارين الجماعية الحماسية</div>
+        </header>
+
+        <section class="classes-section">
+            <div class="classes-grid">
+                
+                <div class="class-card">
+                    <div class="class-image-container">
+                        <img src="https://i.imgur.com/K8Hq4kH.jpg" alt="حصص كارديو بوكسينغ جماعية">
+                    </div>
+                    <div class="class-details">
+                        <div class="class-category">كارديو / حرق دهون</div>
+                        <div class="class-name">كارديو بوكسينغ</div>
+                        <div class="class-features">مزيج حماسي من حركات الملاكمة وفنون الدفاع عن النفس على أنغام الموسيقى السريعة، لحرق السعرات وتحسين اللياقة.</div>
+                        <a href="#" class="join-btn">انضم للحصة</a>
+                    </div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-image-container">
+                        <img src="https://i.imgur.com/G4M1D4r.jpg" alt="حصص HIIT جماعية">
+                    </div>
+                    <div class="class-details">
+                        <div class="class-category">قوة / تحمل</div>
+                        <div class="class-name">تدريب هِيت (HIIT)</div>
+                        <div class="class-features">تمارين متناوبة عالية الكثافة مع فترات راحة قصيرة، لزيادة التمثيل الغذائي وبناء القوة العضلية والانفجارية في وقت قياسي.</div>
+                        <a href="#" class="join-btn">انضم للحصة</a>
+                    </div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-image-container">
+                        <img src="https://i.imgur.com/Uq7o7nE.jpg" alt="حصص KABS جماعية">
+                    </div>
+                    <div class="class-details">
+                        <div class="class-category">قوة القلب (Core)</div>
+                        <div class="class-name">كابس (KABS)</div>
+                        <div class="class-features">حصة مركزة بالكامل على تمارين شد البطن والكوّر والظهر السفلي، لنحت عضلات البطن وتحسين استقرار الجسم.</div>
+                        <a href="#" class="join-btn">انضم للحصة</a>
+                    </div>
+                </div>
+
+                <div class="class-card">
+                    <div class="class-image-container">
+                        <img src="https://i.imgur.com/LqK5R6y.jpg" alt="حصص يوغا جماعية">
+                    </div>
+                    <div class="class-details">
+                        <div class="class-category">مرونة / استرخاء</div>
+                        <div class="class-name">يوغا جماعية (Vinyasa)</div>
+                        <div class="class-features">جلسات يوغا انسيابية تركز على التوافق بين الحركة والتنفس، لتحسين المرونة وتخفيف التوتر العقلي والبدني.</div>
+                        <a href="#" class="join-btn">انضم للحصة</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="corner-deco bottom-right"></div>
+        </section>
+
+    </main>
+
+</body>
+</html>

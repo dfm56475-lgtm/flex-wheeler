@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEX-WHEELER | طلب مدرب شخصي</title>
+    <style>
+        /* --- المتغيرات والتصفير الأساسي --- */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-panel: #141417;
+            --neon-blue: #00f2fe;
+            --neon-red: #ff0055;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- الخلفية الهندسية المشتركة --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        /* --- الحاوية الرئيسية (نفس استايل البانر) --- */
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            background-color: var(--bg-panel);
+            border: 2px solid #333;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- تأثيرات الإضاءة النيون الجانبية --- */
+        .neon-border-left, .neon-border-right {
+            position: absolute;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .neon-border-left {
+            left: 0;
+            background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .neon-border-right {
+            right: 0;
+            background: linear-gradient(to bottom, transparent, var(--neon-red), transparent);
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        /* --- الهيدر (صورة المدرب والعنوان) --- */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border-bottom: 2px solid #333;
+            position: relative;
+        }
+
+        /* عنوان "مدرب شخصي" المستوحى من اللوحة المعدنية */
+        .page-title {
+            background: linear-gradient(145deg, #2a2a2e, #1a1a1d);
+            border: 2px solid #444;
+            color: #fff;
+            padding: 10px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* إطار صورة المدرب المثمن */
+        .coach-photo-frame {
+            width: 160px;
+            height: 160px;
+            background-color: #000;
+            border: 4px solid #444;
+            /* شكل مثمن باستخدام clip-path */
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        .coach-photo-frame::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255,255,255,0.1);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            pointer-events: none;
+        }
+
+        .coach-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* --- قسم النموذج (Form Section) --- */
+        .form-section {
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* استايل الحقول (نفس استايل لوحات الأدوات المعدنية) */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            background-color: rgba(0,0,0,0.3);
+            border: 2px solid #333;
+            color: var(--text-main);
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        /* استايل زر الإرسال النيوني */
+        .submit-btn-container {
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .submit-btn-container {
+                grid-column: span 1;
+            }
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 15px 60px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--neon-red);
+            color: #000;
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.6);
+        }
+
+        /* العناصر الزخرفية المعدنية في الزوايا */
+        .corner-deco {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .corner-deco.top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 4px solid #fff;
+            border-left: 4px solid #fff;
+        }
+
+        .corner-deco.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 4px solid #fff;
+            border-right: 4px solid #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+        <div class="neon-border-left"></div>
+        <div class="neon-border-right"></div>
+
+        <header class="header-section">
+            <div class="corner-deco top-left"></div>
+            
+            <div class="page-title">مدرب شخصي</div>
+            
+            <div class="coach-photo-frame">
+                <img src="https://i.imgur.com/8fXkQ4R.jpg" alt="فليكس ويلر - مدرب شخصي">
+            </div>
+        </header>
+
+        <section class="form-section">
+            <form action="#" method="post" class="form-grid">
+                
+                <div class="form-group">
+                    <label for="full_name">الاسم الكامل</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="أدخل اسمك الثلاثي" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="goal">الهدف الرئيسي</label>
+                    <select id="goal" name="goal" required>
+                        <option value="" disabled selected>اختر هدفك...</option>
+                        <option value="weight_loss">إنقاص الوزن</option>
+                        <option value="muscle_gain">بناء العضلات</option>
+                        <option value="fitness">تحسين اللياقة العامة</option>
+                        <option value="rehab">تأهيل إصابة</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">مستوى الخبرة</label>
+                    <select id="experience" name="experience" required>
+                        <option value="" disabled selected>اختر مستواك...</option>
+                        <option value="beginner">مبتدئ (أقل من 6 أشهر)</option>
+                        <option value="intermediate">متوسط (1-2 سنة)</option>
+                        <option value="advanced">متقدم (أكثر من 2 سنة)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="frequency">عدد أيام التدريب المفضلة (أسبوعياً)</label>
+                    <select id="frequency" name="frequency" required>
+                        <option value="" disabled selected>اختر عدد الأيام...</option>
+                        <option value="2-3">2-3 أيام</option>
+                        <option value="4-5">4-5 أيام</option>
+                        <option value="6">6 أيام</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="notes">ملاحظات إضافية أو إصابات سابقة (إن وجدت)</label>
+                    <textarea id="notes" name="notes" placeholder="اكتب أي معلومات إضافية نود معرفتها..."></textarea>
+                </div>
+
+                <div class="submit-btn-container">
+                    <button type="submit" class="submit-btn">إرسال الطلب</button>
+                </div>
+
+            </form>
+            <div class="corner-deco bottom-right"></div>
+        </section>
+
+    </main>
+
+</body>
+</html>
